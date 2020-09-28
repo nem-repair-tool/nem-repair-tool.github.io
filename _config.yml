@@ -1,6 +1,6 @@
 # theme: jekyll-theme-cayman
 theme: jekyll-theme-modernist
-title: Maple - A Modular Program Repair Tool
-description: Automatic Program Repair using Formal Verification and Expression Templates
+title: NEM - An Automated Program Repair Tool
+description: Automated Repair of Heap-Manipulating Programs using deductive
 github:
   is_project_page: false
