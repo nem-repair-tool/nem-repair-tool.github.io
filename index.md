@@ -7,7 +7,7 @@
 We propose a novel approach to automatically repair buggy heap-manipulating
 programs using separation logic specifications.
 Given an input program C and its formal specification in the form of a Hoare
-triple: {P}~C~{Q}, we
+triple: {P} C {Q}, we
 utilize
 a verification
 system to verify if C is correct against the provided specification.
@@ -43,7 +43,7 @@ We demonstrate the effectiveness of our
 method by comparing our implemented tool with a mutation-based approach on
 buggy versions of 15 heap-manipulating programs.
 Evaluation results show that our tool successfully
-repairs {\ourresult} buggy programs and
+repairs 211/219 buggy programs and
 considerably outperforms a
 state-of-the-art specification-based repair tool.
 
