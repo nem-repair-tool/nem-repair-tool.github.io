@@ -4,47 +4,71 @@
 <!-- # Automated Program Repair using Formal Specifications. -->
 
 ## Abstract
-  We present an automated approach to repair programs using formal
-  verification and expression templates. In our approach, an input program
-  is first verified against its formal specification to discover
-  potentially buggy statements. For each of these statements, we identify
-  the expression that needs to be repaired and set up a template patch
-  which is a linear expression composed of the program's variables and
-  unknown coefficients. Then, we analyze the template-patched program
-  against its specification to collect a set of constraints of the template
-  patch. This constraint set will be solved by a constraint solving
-  technique using Farkas' lemma to identify the unknown coefficients,
-  consequently discovering the patch. We implement our approach in a tool
-  called **maple** and evaluate it with various buggy programs from a widely
-  used benchmark **TCAS** as well as a synthetic, yet challenging benchmark
-  containing recursive programs. Our tool outperforms state-of-the-art
-  program repair tools in returning desired patches.
+We propose a novel approach to automatically repair buggy heap-manipulating
+programs using separation logic specifications.
+Given an input program C and its formal specification in the form of a Hoare
+triple: {P}~C~{Q}, we
+utilize
+a verification
+system to verify if C is correct against the provided specification.
+If the input program is found buggy, we then repair it in the following steps.
+We first rely on the verification results to collect suspicious statements
+of the buggy program
+and rank them
+by their
+likelihood
+to introduce bugs.
+For each suspicious statement, we temporarily replace it by a
+template patch which may comprise several statements.
+We also capture this patch
+by using
+a pair of
+unknown second-order pre- and post-conditions.
+We then utilize the verification tool again to analyze the temporarily
+patched program to collect constraints
+on the specification
+of the template patch with the help of the original specification
+P and Q.
+These constraints
+are inferred
+by our constraint solver to discover the suitable specification of the
+template patch.
+This discovered specification can be used to synthesize a candidate
+patch for the buggy program.
+The candidate patch
+is marked as a correct patch
+if it is
+validated by the verification engine.
+We demonstrate the effectiveness of our
+method by comparing our implemented tool with a mutation-based approach on
+buggy versions of 15 heap-manipulating programs.
+Evaluation results show that our tool successfully
+repairs {\ourresult} buggy programs and
+considerably outperforms a
+state-of-the-art specification-based repair tool.
 
-## Maple
-Maple is build on top of the [HIP](http://loris-5.d2.comp.nus.edu.sg/hip/index.html)
+## NEM
+NEM is build on top of the [HIP](http://loris-5.d2.comp.nus.edu.sg/hip/index.html)
 verification system and [Songbird](https://songbird-prover.github.io/) prover. 
 
-## Compared Tools
-- [AllRepair](https://github.com/batchenRothenberg/AllRepair)
-- [Forensic](http://www.informatik.uni-bremen.de/agra/eng/forensic.php)
-- [Angelix](https://github.com/mechtaev/angelix) - The experiments are done with
-  the provided VirtualBox image.
-- [GenProg](https://github.com/squaresLab/genprog-code)
+## Compared Tool
+- [Enhancing Automated Program Repair with Deductive Verification](https://dblp.org/db/conf/icsm/icsme2016.html#LeLLG16)
 
-## The Benchmarks and Experiments.
-- The test suites for the *TCAS* benchmark is provided by Xianglong Kong. You
-  can download by this [link](files/genprog-demo.zip). The benchmark contains 41
-  buggy cases. Each case has its own test suite of 40 tests.
-- The details about the second benchmark is provided
-in [Github](https://github.com/maple-repair/recursive-benchmark).
-- The experiments of AllRepair and Forensic are done with the same format which
-  uses an assertion that compares the results of buggy and correct programs,
-  e.g. assert(buggy\_sum(x, y) == correct\_sum(x,y)
-- For GenProg and Angelix, we create test suites of 10 for each buggy program in
-  the second experiment. We follow their tutorials in setting up this experiment.
+<!-- ## The Benchmarks and Experiments. -->
+<!-- - The test suites for the *TCAS* benchmark is provided by Xianglong Kong. You -->
+<!--   can download by this [link](files/genprog-demo.zip). The benchmark contains 41 -->
+<!--   buggy cases. Each case has its own test suite of 40 tests. -->
+<!-- - The details about the second benchmark is provided -->
+<!-- in [Github](https://github.com/maple-repair/recursive-benchmark). -->
+<!-- - The experiments of AllRepair and Forensic are done with the same format which -->
+<!--   uses an assertion that compares the results of buggy and correct programs, -->
+<!--   e.g. assert(buggy\_sum(x, y) == correct\_sum(x,y) -->
+<!-- - For GenProg and Angelix, we create test suites of 10 for each buggy program in -->
+<!--   the second experiment. We follow their tutorials in setting up this experiment. -->
 
 ## People
 - Dr. Wei-Ngan Chin (Associate Professor - National University of Singapore)
+- Dr. Ilya Sergey (Associate Professor - National University of Singapore)
 - Dr. Quang-Trung Ta (Research Fellow - National University of Singapore) 
 - Thanh-Toan Nguyen (PhD Candidate - National University of Singapore)
 
