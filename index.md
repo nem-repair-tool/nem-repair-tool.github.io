@@ -4,48 +4,32 @@
 <!-- # Automated Program Repair using Formal Specifications. -->
 
 ## Abstract
-We propose a novel approach to automatically repair buggy heap-manipulating
-programs using separation logic specifications.
+We propose a novel method to automatically repairing buggy heap-manipulating
+programs using constraint solving and deductive synthesis.
 Given an input program C and its formal specification in the form of a Hoare
-triple: {P} C {Q}, we
-utilize
-a verification
-system to verify if C is correct against the provided specification.
-If the input program is found buggy, we then repair it in the following steps.
-We first rely on the verification results to collect suspicious statements
-of the buggy program
-and rank them
-by their
-likelihood
-to introduce bugs.
-For each suspicious statement, we temporarily replace it by a
-template patch which may comprise several statements.
-We also capture this patch
-by using
-a pair of
-unknown second-order pre- and post-conditions.
-We then utilize the verification tool again to analyze the temporarily
-patched program to collect constraints
-on the specification
-of the template patch with the help of the original specification
-P and Q.
-These constraints
-are inferred
-by our constraint solver to discover the suitable specification of the
-template patch.
-This discovered specification can be used to synthesize a candidate
-patch for the buggy program.
-The candidate patch
-is marked as a correct patch
-if it is
-validated by the verification engine.
-We demonstrate the effectiveness of our
-method by comparing our implemented tool with a mutation-based approach on
-buggy versions of 15 heap-manipulating programs.
-Evaluation results show that our tool successfully
-repairs 211/219 buggy programs and
-considerably outperforms a
-state-of-the-art specification-based repair tool.
+triple: {P} C {Q}, we use a separation-logic-based verifier to
+verify if program C is correct w.r.t. its specifications.
+If program C is found buggy, we then repair it in the following steps.
+First, we rely on the verification results to collect a list of suspicious
+statements of the buggy program.
+For each suspicious statement, we temporarily replace it with a template patch
+representing the desired statements.
+The template patch is also formally specified using a pair of unknown pre- and
+postcondition.
+Next, we use the verifier to analyze the temporarily
+patched program to collect constraints related to the pre- and postcondition of
+the template patch.
+Then, these constraints are solved by our constraint solving technique
+to discover the suitable specifications of the template patch.
+Subsequently, these specifications can be used to synthesize
+program statements of the template patch, consequently creating a candidate
+program.
+Finally, if the candidate program is validated, it is returned as the repaired
+program.
+We demonstrate the effectiveness of our approach by evaluating our implementation
+and a state-of-the-art approach on a benchmark of 231 buggy programs.
+The experiment results show that our tool successfully repairs 223 buggy
+programs and considerably outperforms the compared tool.
 
 ## NEM
 NEM is build on top of the [HIP](http://loris-5.d2.comp.nus.edu.sg/hip/index.html)
@@ -54,17 +38,14 @@ verification system and [Songbird](https://songbird-prover.github.io/) prover.
 ## Compared Tool
 - [Enhancing Automated Program Repair with Deductive Verification](https://dblp.org/db/conf/icsm/icsme2016.html#LeLLG16)
 
-<!-- ## The Benchmarks and Experiments. -->
-<!-- - The test suites for the *TCAS* benchmark is provided by Xianglong Kong. You -->
-<!--   can download by this [link](files/genprog-demo.zip). The benchmark contains 41 -->
-<!--   buggy cases. Each case has its own test suite of 40 tests. -->
-<!-- - The details about the second benchmark is provided -->
-<!-- in [Github](https://github.com/maple-repair/recursive-benchmark). -->
-<!-- - The experiments of AllRepair and Forensic are done with the same format which -->
-<!--   uses an assertion that compares the results of buggy and correct programs, -->
-<!--   e.g. assert(buggy\_sum(x, y) == correct\_sum(x,y) -->
-<!-- - For GenProg and Angelix, we create test suites of 10 for each buggy program in -->
-<!--   the second experiment. We follow their tutorials in setting up this experiment. -->
+## The Benchmarks and Experiments.
+
+- The details about the benchmark we use in our experiments is provided
+in [Github](https://github.com/nem-repair-tool/heap-repair).
+
++ README provides information about our virtual machine.
++ Folder "benchmark" contains correct programs
++ Folder "evaluated" contains buggy versions of each program in corresponding folder
 
 ## People
 - Dr. Wei-Ngan Chin (Associate Professor - National University of Singapore)
